@@ -1,0 +1,30 @@
+@host = http://localhost:8080/api 
+@uri = {{host}}/pacientes
+
+GET {{uri}}
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "cedula" : "704560543",
+    "nombre_completo" : "Berta Blanco Morales",
+    "fecha_nacimiento" : "1970-08-01",
+    "telefono" : "85678765",
+    "username" : "MoraBlanco",
+    "password" : "87654321"
+}
+###
+
+PUT {{uri}}/5
+Content-Type: application/json
+
+{
+    "nombre_completo" : "Berta Cecilia Blanco",
+    "telefono": "8732-4032"
+}
+###
+
+DELETE {{uri}}/5
+###

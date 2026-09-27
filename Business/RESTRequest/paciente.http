@@ -1,0 +1,32 @@
+@host = http://localhost:9090/api 
+@uri = {{host}}/pacientes
+
+GET {{uri}}
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "cedula" : "734505067",
+    "nombre_completo" : "Julie Espinoza Perez",
+    "fecha_nacimiento" : "2000-08-08",
+    "telefono" : "8567-8776",
+    "username" : "julieperez",
+    "password" : "juli09PG@"
+}
+###
+
+PUT {{uri}}/6
+Content-Type: application/json
+
+{
+    "nombre_completo" : "Juliet Anastacia Espinoza Perez",
+    "telefono": "6001-8976"
+}
+###
+
+DELETE {{uri}}/6
+###
+
+GET {{uri}}/filter/0/10?cedula=&nombre=Ju

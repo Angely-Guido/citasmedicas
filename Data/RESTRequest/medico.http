@@ -1,0 +1,31 @@
+@host = http://localhost:8080/api 
+@uri = {{host}}/medicos
+
+GET {{uri}}
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "especialidad_id" : 3,
+    "nombre_completo" : "Anastacia Ruiz",
+    "licencia": "LIC-123480",
+    "telefono": "8569-2481",
+    "username": "AnaRuiz",
+    "password": "87654398"
+}
+###
+
+PUT {{uri}}/2
+Content-Type: application/json
+
+{
+    "nombre_completo" : "Noelia Veronica Guido Blanco",
+    "telefono": "8569-2470"
+}
+###
+DELETE {{uri}}/2
+###
+
+GET {{uri}}/filter/0/10?cedula=&nombre=&especialidad=

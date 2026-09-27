@@ -1,0 +1,29 @@
+@host = http://localhost:8080/api 
+@uri = {{host}}/citas
+
+GET {{uri}}/paciente/3
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "paciente_id" : 3,
+    "medico_id" : 1,
+    "fecha_hora": "2026-10-15 10:00:00",
+    "motivo": "Consulta General"
+}
+###
+
+PUT {{uri}}/2
+Content-Type: application/json
+
+{
+    "nombre_completo" : "Noelia Veronica Guido Blanco",
+    "telefono": "8569-2470"
+}
+###
+DELETE {{uri}}/2
+###
+
+GET {{uri}}/filter/0/10?cedula=&nombre=&especialidad=
