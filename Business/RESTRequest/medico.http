@@ -1,19 +1,21 @@
 @host = http://localhost:9090/api 
 @uri = {{host}}/medicos
-
+@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjaXRhcy1tZWRpY2FzLWJ1c2luZXNzIiwiaWF0IjoxNzkwNzgwNDc0LCJleHAiOjE3OTA3ODQwNzQsInN1YiI6IjIwIiwidXNlcm5hbWUiOiJqdWFuY2l0YTA4Iiwicm9sX2lkIjoyfQ.CuQzdlj0yqQ4HA8sKyy9451GqWkeoBjQwdSn7Tj5_68
 GET {{uri}}
+Authorization: Bearer {{token}}
 ###
 
 POST {{uri}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
     "especialidad_id" : 2,
-    "nombre_completo" : "Juana Santamaria",
-    "licencia": "LIC-139080",
-    "telefono": "6079-2481",
-    "username": "juancita08",
-    "password": "@Agua0980"
+    "nombre_completo" : "Abril Solorzano Lopez",
+    "licencia": "LIC-133480",
+    "telefono": "7089-2481",
+    "username": "lopez0808",
+    "password": "@bril08_loz"
 }
 ###
 
@@ -29,3 +31,12 @@ DELETE {{uri}}/4
 ###
 
 GET {{uri}}/filter/0/10?cedula=&nombre=&especialidad=
+###
+
+POST http://localhost:9090/api/auth/login
+Content-Type: application/json
+
+{
+    "username" : "juancita08",
+    "password":  "@Agua0980"
+}

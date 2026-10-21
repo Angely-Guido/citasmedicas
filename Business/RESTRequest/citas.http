@@ -1,15 +1,23 @@
 @host = http://localhost:8080/api 
 @uri = {{host}}/citas
+@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjaXRhcy1tZWRpY2FzLWJ1c2luZXNzIiwiaWF0IjoxNzkwNzAwNTM4LCJleHAiOjE3OTA3MDA1ODMsInN1YiI6IjIwIiwidXNlcm5hbWUiOiJqdWFuY2l0YTA4Iiwicm9sX2lkIjoyfQ.akss7yv2Ktcb9E0bYFAMwqjtNV6PTNYdWgQfkDX4pKk
 
-GET {{uri}}/paciente/3
+GET {{uri}}/paciente/7
+Authorization: Bearer {{token}}
+###
+
+GET {{uri}}/medico/3
+Authorization: Bearer {{token}}
+
 ###
 
 POST {{uri}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "paciente_id" : 3,
-    "medico_id" : 1,
+    "paciente_id" : 7,
+    "medico_id" : 3,
     "fecha_hora": "2026-10-15 10:00:00",
     "motivo": "Consulta General"
 }

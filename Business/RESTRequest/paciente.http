@@ -1,19 +1,22 @@
 @host = http://localhost:9090/api 
 @uri = {{host}}/pacientes
+@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjaXRhcy1tZWRpY2FzLWJ1c2luZXNzIiwiaWF0IjoxNzkwNzgwNDc0LCJleHAiOjE3OTA3ODQwNzQsInN1YiI6IjIwIiwidXNlcm5hbWUiOiJqdWFuY2l0YTA4Iiwicm9sX2lkIjoyfQ.CuQzdlj0yqQ4HA8sKyy9451GqWkeoBjQwdSn7Tj5_68
 
 GET {{uri}}
+Authorization: Bearer {{token}}
 ###
 
 POST {{uri}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "cedula" : "734505067",
-    "nombre_completo" : "Julie Espinoza Perez",
-    "fecha_nacimiento" : "2000-08-08",
-    "telefono" : "8567-8776",
-    "username" : "julieperez",
-    "password" : "juli09PG@"
+    "cedula" : "112345568",
+    "nombre_completo" : "Amelia Gonzales",
+    "fecha_nacimiento" : "1990-05-7",
+    "telefono" : "8567-8756",
+    "username" : "ameliaGonz",
+    "password" : "@melia09_@ass"
 }
 ###
 
@@ -21,8 +24,8 @@ PUT {{uri}}/6
 Content-Type: application/json
 
 {
-    "nombre_completo" : "Juliet Anastacia Espinoza Perez",
-    "telefono": "6001-8976"
+    "nombre_completo" : "",
+    "telefono": ""
 }
 ###
 

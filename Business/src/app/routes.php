@@ -4,6 +4,7 @@ namespace App\controllers;
 use Slim\Routing\RouteCollectorProxy; 
 
 $app->group('/api', function(RouteCollectorProxy $api) {
+    $api->post('/auth/login', Auth::class . ':login'); 
     $api->group('/medicos', function(RouteCollectorProxy $endpoint) { 
         $endpoint->get('[/{id}]', Medico::class . ':read'); 
         $endpoint->get('/filter/{offset}/{limit}', Medico::class . ':filter');
@@ -22,7 +23,8 @@ $app->group('/api', function(RouteCollectorProxy $api) {
     });
 
     $api->group('/citas', function(RouteCollectorProxy $url) {
-        $url->get('/paciente[/{id}]', Citas::class . ':read');
+        $url->get('/paciente/{id}', Citas::class . ':readPaciente');
+        $url->get('/medico/{id}', Citas::class . ':readMedico');
         $url->post('', Citas::class . ':create');
     });
 

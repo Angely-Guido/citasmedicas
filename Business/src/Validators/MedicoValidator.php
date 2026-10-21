@@ -16,7 +16,7 @@ final class MedicoValidator {
             'nombre_completo' => [
                 'regla' => v::stringType()
                     ->notBlank()
-                    ->length(v::between(11, 150))
+                    ->length(v::between(6, 150))
                     ->regex('/^[A-Za-zÑñÁÉÍÓÚáéíóú]{2,}(?: [A-Za-zÑñÁÉÍÓÚáéíóú]{2,}){1,3}$/u'),
                 'mensaje' => 'El nombre completo es obligatorio y debe tener entre 11 y 150 caracteres, solo letras y espacios.',
             ],
@@ -25,7 +25,7 @@ final class MedicoValidator {
                 'mensaje' => 'La licencia es obligatoria y debe tener entre 1 y 50 caracteres.',
             ],
             'username' => [
-                'regla' => v::stringType()->notBlank()->length(v::between(8, 64))->regex('/^[a-z0-9]{8,16}$/'),
+                'regla' => v::stringType()->notBlank()->length(v::between(8, 16))->regex('/^[a-z0-9]{8,16}$/'),
                 'mensaje' => 'El username debe tener entre 8 y 64 caracteres y solo letras minúsculas y números, sin espacios.',
             ],
             'password' => [

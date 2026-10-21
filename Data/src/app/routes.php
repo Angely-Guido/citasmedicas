@@ -29,6 +29,7 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 });
 
 $app->group('/api', function(RouteCollectorProxy $api) { //Todo lo que entre aqui, va a empezar con api
+    $api->post('/auth/credentials', Auth::class . ':credentials'); 
     
     $api->group('/medicos', function(RouteCollectorProxy $endpoint) { //Todo lo que este aqui adentro, a /api se le va agregar /medico = /api/medico
 
@@ -53,7 +54,8 @@ $app->group('/api', function(RouteCollectorProxy $api) { //Todo lo que entre aqu
     });
 
     $api->group('/citas', function(RouteCollectorProxy $url) {
-        $url->get('/paciente[/{id}]', Citas::class . ':read');
+        $url->get('/paciente/{id}', Citas::class . ':readPaciente');
+        $url->get('/medico/{id}', Citas::class . ':readMedico');
         $url->post('', Citas::class . ':create');
     });
 

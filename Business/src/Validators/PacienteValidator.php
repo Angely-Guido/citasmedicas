@@ -10,8 +10,10 @@ final class PacienteValidator {
     private function reglas() : array {
         return [
             'cedula' => [
-                'regla' => v::stringType()->notBlank()->regex('/^\d{9,12}$/'),
-                'mensaje' => 'La cédula es obligatoria y debe contener solo dígitos, entre 9 y 12 caracteres.',
+                'regla' => v::stringType()
+                ->notBlank()
+                ->regex('/^(?:[1-9][0-9]{8}|5[0-9]{11})$/'),
+                'mensaje' => 'La cédula es obligatoria y debe contener 9 caracteres numericos o dimex de 12 digitos iniciando con 5.',
             ],
             'nombre_completo' => [
                 'regla' => v::stringType()
@@ -21,11 +23,14 @@ final class PacienteValidator {
                 'mensaje' => 'El nombre completo es obligatorio y debe tener entre 11 y 150 caracteres, solo letras y espacios.',
             ],
             'fecha_nacimiento' => [
-                'regla' => v::stringType()->notBlank()->date('Y-m-d'),
+                'regla' => v::date()->notBlank(),
                 'mensaje' => 'La fecha de nacimiento es obligatoria y debe ser una fecha válida en formato YYYY-MM-DD.',
             ],
             'username' => [
-                'regla' => v::stringType()->notBlank()->length(v::between(8, 64))->regex('/^[a-z0-9]{8,16}$/'),
+                'regla' => v::stringType()
+                ->notBlank()
+                ->length(v::between(8, 64))
+                ->regex('/^[a-z0-9]{8,16}$/'),
                 'mensaje' => 'El username debe tener entre 8 y 64 caracteres y solo letras minúsculas y números, sin espacios.',
             ],
             'password' => [
@@ -37,7 +42,7 @@ final class PacienteValidator {
             ],
             'telefono' => [
                 'regla' => v::stringType()->regex('/^[2-9][0-9]{3}-[0-9 ]{4}$/')->length(v::equals(9)),
-                'mensaje' => 'El teléfono debe tener el formato ####-#### incluyendo el guión.',
+                'mensaje' => 'El teléfono debe tener el formato ####-#### incluyendo el guión y contener 9 caracteres.',
             ],
         ];
     }
