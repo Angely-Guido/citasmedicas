@@ -14,7 +14,6 @@ use App\Validators\MedicoValidator;
 class Medico {
     private ContainerInterface $container; // Variable para guardar la caja de herramientas
 
- 
     public function __construct(private ContainerInterface $c) {
         $this->container = $c;
     }
@@ -28,7 +27,7 @@ class Medico {
             $response ->getBody()->write((string) $upstream->getBody());
             return $response
                     ->withHeader(
-                        'Content-type', $upstream->getHeaderLine('Contect-type') ?: 'application/json; charset=utf-8')
+                        'Content-Type', $upstream->getHeaderLine('Content-Type') ?: 'application/json; charset=utf-8')
                     ->withStatus($upstream->getStatusCode());
 
             }
@@ -37,7 +36,7 @@ class Medico {
         }
 
         catch (RequestException){
-            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 503);
+            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 502);
         }
     }
 
@@ -52,7 +51,7 @@ public function filter(Request $request, Response $response, array $args) {
             $response ->getBody()->write((string) $upstream->getBody());
             return $response
                     ->withHeader(
-                        'Content-type', $upstream->getHeaderLine('Contect-type') ?: 'application/json; charset=utf-8')
+                        'Content-Type', $upstream->getHeaderLine('Content-Type') ?: 'application/json; charset=utf-8')
                     ->withStatus($upstream->getStatusCode());
             }
         catch (ConnectException){
@@ -60,7 +59,7 @@ public function filter(Request $request, Response $response, array $args) {
         }
 
         catch (RequestException){
-            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 503);
+            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 502);
         }
     }
 
@@ -94,7 +93,6 @@ public function filter(Request $request, Response $response, array $args) {
     }
 
 public function update(Request $request, Response $response, array $args): Response {
-
     try{
             $dataService = $this->container->get(DataService::class);
             $body        = $request->getBody();
@@ -108,7 +106,7 @@ public function update(Request $request, Response $response, array $args): Respo
         }
 
         catch (RequestException){
-            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 503);
+            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 502);
         }
     
     }
@@ -128,7 +126,7 @@ public function delete(Request $request, Response $response, array $args): Respo
         }
 
         catch (RequestException){
-            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 503);
+            return $this->json($response, ['error' => 'El no se puedo consultar el servicio de datos'], 502);
         }
     
     }

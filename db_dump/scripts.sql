@@ -116,6 +116,7 @@ INSERT INTO especialidades (nombre) VALUES
         ('Pediatria');
 
 -- SP para obtener citas de un paciente
+DELIMITER //
 CREATE PROCEDURE sp_obtener_citas_medico(
     IN m_medico_id INT
 )
@@ -126,3 +127,4 @@ BEGIN
     WHERE c.medico_id = m_medico_id
     ORDER BY c.fecha_hora DESC;
 END //
+DELIMITER ;

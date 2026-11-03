@@ -59,8 +59,8 @@ public function filter(Request $request, Response $response, array $args) {
 
     }
     $params = $request->getQueryParams();
-    $name = trim((string) ($params['nombre'] ?? $params['nombre_completo']));
-    $license = trim((string) ($params['licencia'] ?? $params['cedula']));
+    $name = trim((string) ($params['nombre'] ?? $params['nombre_completo'] ?? ''));
+    $license = trim((string) ($params['licencia'] ?? $params['cedula'] ?? ''));
     $specialty = trim((string) ($params['especialidad'] ?? null));
 
     $query = MedicoModel::query()
@@ -154,7 +154,7 @@ public function filter(Request $request, Response $response, array $args) {
                         ->value('id');
 
                     if ($roleId === null) {
-                        throw new RuntimeException('El rol Médico no está configurado.');
+                        throw new \RuntimeException('El rol Médico no está configurado.');
                     }
 
                     $user = User::create([
@@ -189,10 +189,6 @@ public function filter(Request $request, Response $response, array $args) {
 
         return $this->json($response, ['data' => $medico->toArray()], 201);
     }
-
-
-
-
 
 
 public function update(Request $request, Response $response, array $args): Response {
@@ -251,6 +247,7 @@ public function update(Request $request, Response $response, array $args): Respo
 
             return $this->json($response, ['data' => $medico->toArray()], 200);
             }
+        return $this->json($response, ['error' => 'Datos incompletos'], 400);
     }
 
 
@@ -287,6 +284,7 @@ public function delete(Request $request, Response $response, array $args): Respo
 
             return $this->json($response, ['message' => 'Medico eliminado exitosamente'], 200);
         }
+    return $this->json($response, ['error' => 'Datos incompletos'], 400);
     }
 
 private function json(Response $response, array $payload, int $status) : Response {

@@ -24,11 +24,12 @@ function matchPattern(field : SchemaPath<string>, pattern: RegExp, message: stri
   styleUrl: './frm-medico.css',
   templateUrl: './frm-medico.html',
 })
-export class FrmMedico {
+export class FrmMedico implements OnInit {
   titulo: string = "Formulario Medico";
   dialogRef = inject(MatDialogRef<FrmMedico>)
   private readonly dialog = inject(MatDialog);
   private readonly data   = inject(MAT_DIALOG_DATA);
+  readonly isEditing = this.data.data != undefined;
 
   objMedico = signal<MedicoCreateInput>({
     especialidad_id: 0,
@@ -51,26 +52,25 @@ export class FrmMedico {
       return null;
     });
 
+    if (!this.isEditing) {
+      required(s.username!, {message: "El nombre de usuario es requerido"});
+      minLength(s.username!, 8, {message: "El usuario debe tener al menos 8 caracteres"});
+      maxLength(s.username!, 16, {message: "El usuario no puede tener mas de 16 caracteres"});
+      matchPattern(s.username!, /^[a-z0-9]{8,16}$/, "Formato usuario invalido");
 
-    required(s.username!, {message: "El nombre de usuario es requerido"});
-    minLength(s.username!, 8, {message: "El usuario debe tener al menos 8 caracteres"});
-    maxLength(s.username!, 16, {message: "El usuario no puede tener mas de 16 caracteres"});
-    matchPattern(s.username!, /^[a-z0-9]{8,16}$/, "Formato usuario invalido");
+      required(s.password!, {message: "contraseña es requerido"});
+      minLength(s.password!, 8, {message: "La contraseña debe tener al menos 8 caracteres"});
+      maxLength(s.password!, 64, {message: "La contraseña no puede tener mas de 64 caracteres"});
+      matchPattern(s.password!, /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#$@*])[\s\S]{8,16}$/, "Formato usuario invalido");
 
-
-    required(s.password!, {message: "contraseña es requerido"});
-    minLength(s.password!, 8, {message: "La contraseña debe tener al menos 8 caracteres"});
-    maxLength(s.password!, 64, {message: "La contraseña no puede tener mas de 64 caracteres"});
-    matchPattern(s.password!, /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#$@*])[\s\S]{8,16}$/, "Formato usuario invalido");
+    }
 
     required(s.nombre_completo, {message: "El nombre es requirida"});
     minLength(s.nombre_completo, 6, {message: "El nombre debe tener al menos 11 caracteres"});
     maxLength(s.nombre_completo, 150, {message: "El nombre no puede tener mas de 150 caracteres"});
     matchPattern(s.nombre_completo, /^[A-Za-zÑñÁÉÍÓÚáéíóú]{2,}(?: [A-Za-zÑñÁÉÍÓÚáéíóú]{2,}){1,3}$/u, "Formato nombre invalido");
 
-
     pattern(s.telefono!, /^[2-9][0-9]{3}-[0-9 ]{4}$/, { message: 'formato de telefono invalido' });
-
 
     required(s.licencia, {message: "La licencia es requirida"});
     minLength(s.licencia, 8, {message: "La licencia debe tener al menos 8 caracteres"});
@@ -87,7 +87,17 @@ export class FrmMedico {
 );
   
   ngOnInit(): void {
-    this.titulo = this.data.this;
+    this.titulo = this.data.title;
+    if (this.data.data) {
+      this.objMedico.set({
+        especialidad_id: this.data.data.especialidad_id,
+        nombre_completo: this.data.data.nombre_completo,
+        licencia: this.data.data.licencia,
+        telefono: this.data.data.telefono ?? '',
+        username: '',
+        password: '',
+      });
+    }
   }
 
 

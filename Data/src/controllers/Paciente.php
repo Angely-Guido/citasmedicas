@@ -88,7 +88,7 @@ class Paciente {
                         ->value('id');
 
                     if ($roleId === null) {
-                        throw new RuntimeException('El rol Paciente no está configurado.');
+                        throw new \RuntimeException('El rol Paciente no está configurado.');
                     }
 
                     $user = User::create([
@@ -167,6 +167,7 @@ public function update(Request $request, Response $response, array $args): Respo
 
             return $this->json($response, ['data' => $paciente->toArray()], 200);
             }
+        return $this->json($response, ['error' => 'Datos incompletos'], 400);
     }
 
 
@@ -203,6 +204,7 @@ public function delete(Request $request, Response $response, array $args): Respo
 
             return $this->json($response, ['message' => 'Paciente eliminado exitosamente'], 200);
         }
+    return $this->json($response, ['error' => 'Datos incompletos'], 400);
     }
 
 
@@ -219,8 +221,8 @@ public function filter(Request $request, Response $response, array $args) {
 
     }
     $params = $request->getQueryParams();
-    $name = trim((string) ($params['nombre'] ?? $params['nombre_completo']));
-    $cedula = trim((string) ($params['cedula'] ?? $params['cedula']));
+    $name = trim((string) ($params['nombre'] ?? $params['nombre_completo'] ?? ''));
+    $cedula = trim((string) ($params['cedula'] ?? $params['cedula'] ?? ''));
 
     $query = PacienteModel::query()
     ->select([

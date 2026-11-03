@@ -21,5 +21,4 @@ RUN composer install
 
 RUN composer dump-autoload
 
-
 RUN sed -i 's/DocumentRoot.*$/DocumentRoot \/var\/www\/html\/public/' /etc/apache2/sites-enabled/000-default.conf

@@ -5,8 +5,6 @@ import { environment } from '../../../environments/environment.development';
 
 type ParametroMedico = Record<string, string | number | boolean>;
 
-const _SERVIDOR =environment.servidor;
-
 interface RespuestaMedicos {
     data: MedicoModel[];
     pagination: {
@@ -16,15 +14,22 @@ interface RespuestaMedicos {
     };
 }
 
-//@Service()
-@Injectable({ providedIn: 'root'})
+interface RespuestaMedico {
+    data: MedicoModel | null;
+}
+
+const _SERVIDOR = environment.servidor;
+
+@Injectable({ providedIn: 'root' })
 export class MedicoService {
     http = inject(HttpClient)
-    private readonly parametros = signal<ParametroMedico | null>(null); 
+    private readonly parametros = signal<ParametroMedico | null>(null);
 
-    readonly medicos = httpResource<RespuestaMedicos>(()=> {
+    private readonly medicoId = signal<number | null> (null);
+
+    readonly medicos = httpResource<RespuestaMedicos>(() => {
         const parametros = this.parametros();
-        if(parametros === null) {
+        if (parametros === null) {
             return undefined;
         }
         return {
@@ -32,14 +37,24 @@ export class MedicoService {
             params: parametros
         };
     });
-    filtrar(parametros: ParametroMedico): void {
+
+    readonly medicoPorId = httpResource<RespuestaMedico>(() => {
+        const id = this.medicoId();
+        return id === null ? undefined : `${_SERVIDOR}/medicos/${id}`;
+    });
+
+    public buscarPorId(id:number) : void {
+        this.medicoId.set(id);
+    }
+
+    public filtrar(parametros: ParametroMedico): void {
         this.parametros.set(parametros);
     }
 
-    guardar(datos : MedicoModel, id? : number) {
+    public guardar(datos: MedicoModel, id?: number) {
         delete datos.id;
 
-        if(id) { //Modificando el cliente
+        if (id) { //Modificando el cliente
             return this.http.put<any>(`${_SERVIDOR}/medicos/${id}`, datos);
 
 

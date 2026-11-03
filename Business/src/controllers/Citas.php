@@ -60,7 +60,7 @@ class Citas {
             $data = json_decode($body, true);
 
             if (!is_array($data) || json_last_error() !== JSON_ERROR_NONE) {
-                return $this->json($response, ['errors' => ['body' => 'Debe enviar un objeto JSON válido']]);
+                return $this->json($response, ['errors' => ['body' => 'Debe enviar un objeto JSON válido']], 422);
             }
 
             $dataService = $this->container->get(DataService::class);

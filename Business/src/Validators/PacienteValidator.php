@@ -29,9 +29,9 @@ final class PacienteValidator {
             'username' => [
                 'regla' => v::stringType()
                 ->notBlank()
-                ->length(v::between(8, 64))
+                ->length(v::between(8, 16))
                 ->regex('/^[a-z0-9]{8,16}$/'),
-                'mensaje' => 'El username debe tener entre 8 y 64 caracteres y solo letras minúsculas y números, sin espacios.',
+                'mensaje' => 'El username debe tener entre 8 y 16 caracteres y solo letras minúsculas y números, sin espacios.',
             ],
             'password' => [
                 'regla' => v::stringType()
