@@ -32,7 +32,7 @@ export class App {
     {label: 'Inicio', icon: 'home', route:'home', rol :[0, 1 , 2, 3]},
     {label: 'Medicos', icon: 'stethoscope', route:'medico', rol : [0, 1, 3]},
     {label: 'Pacientes', icon: 'personal_injury', route:'paciente', rol :[0, 1]},
-    {label: 'Citas', icon: 'calendar_month', route:'cita', rol :[0, 1]},
+    {label: 'Citas', icon: 'calendar_month', route:'citas', rol :[0, 1]},
   ];
 
   logout() {

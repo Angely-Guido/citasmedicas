@@ -2,16 +2,16 @@
 
 use Slim\Factory\AppFactory;
 use DI\Container;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
 use JimTools\JwtAuth\Decoder\FirebaseDecoder;
 use JimTools\JwtAuth\Exceptions\AuthorizationException;
 use JimTools\JwtAuth\Middleware\JwtAuthentication;
 use JimTools\JwtAuth\Options;
 use JimTools\JwtAuth\Rules\RequestPathRule;
 use JimTools\JwtAuth\Secret;
-
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -22,19 +22,21 @@ $dotenv->load();
 
 AppFactory::setContainer($container);
 
+// se construye el nuclep de la app
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
-$app->addBodyParsingMiddleware(); 
+$app->addBodyParsingMiddleware();
 
-require_once "routes.php"; 
 require_once "config.php";
+require_once "routes.php";
 
 $app->add(new JwtAuthentication(
     new Options(isSecure: false),
     new FirebaseDecoder(new Secret($_ENV['KEY'], 'HS256')),
-    [new RequestPathRule(
-        ['/'], 
-        ['/api/auth/login', '/api/medicos'])]
+    [
+        new RequestPathRule(
+            ['/'], 
+            ['/api/auth/login'])]
 ));
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
@@ -69,4 +71,4 @@ $app->add(function (ServerRequestInterface $request, RequestHandlerInterface $ha
 		->withHeader('Vary', 'Origin');
 });
 
-$app->run(); 
+$app->run();
